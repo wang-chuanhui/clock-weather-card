@@ -82,7 +82,9 @@ const languages: any = {
   ur,
   vi,
   zhcn,
-  zhtw
+  zhtw, 
+  zhhans: zhcn, 
+  zhhant: zhtw,
 }
 
 export function localize (key: string, locale: string): string {
