@@ -510,41 +510,43 @@ export class ClockWeatherCard extends LitElement {
   }
 
   private windBearingDes(bearing: number): string {
+    let key = 'ui.card.weather.cardinal_direction.'
     if (bearing < 11.25) {
-      return this.localize('wind.N')
+      key = key + 'n'
     }else if (bearing < 11.25 * 3) {
-      return this.localize('wind.NNE')
+      key = key + 'nne'
     }else if (bearing < 11.25 * 5) {
-      return this.localize('wind.NE')
+      key = key + 'ne'
     }else if (bearing < 11.25 * 7) {
-      return this.localize('wind.ENE')
+      key = key + 'ene'
     }else if (bearing < 11.25 * 9) {
-      return this.localize('wind.E')
+      key = key + 'e'
     }else if (bearing < 11.25 * 11) {
-      return this.localize('wind.ESE')
+      key = key + 'ese'
     }else if (bearing < 11.25 * 13) {
-      return this.localize('wind.SE')
+      key = key + 'se'
     }else if (bearing < 11.25 * 15) {
-      return this.localize('wind.SSE')
+      key = key + 'sse'
     }else if (bearing < 11.25 * 17) {
-      return this.localize('wind.S')
+      key = key + 's'
     }else if (bearing < 11.25 * 19) {
-      return this.localize('wind.SSW')
+      key = key + 'ssw'
     }else if (bearing < 11.25 * 21) {
-      return this.localize('wind.SW')
+      key = key + 'sw'
     }else if (bearing < 11.25 * 23) {
-      return this.localize('wind.WSW')
+      key = key + 'wsw'
     }else if (bearing < 11.25 * 25) {
-      return this.localize('wind.W')
+      key = key + 'w'
     }else if (bearing < 11.25 * 27) {
-      return this.localize('wind.WNW')
+      key = key + 'wnw'
     }else if (bearing < 11.25 * 29) {
-      return this.localize('wind.NW')
+      key = key + 'nw'
     }else if (bearing < 11.25 * 31) {
-      return this.localize('wind.NNW')
+      key = key + 'nnw'
     }else {
-      return this.localize('wind.N')
+      key = key + 'n'
     }
+    return this.hass.localize(key)
   }
 
   private getApparentTemperature (): number | null {
