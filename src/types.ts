@@ -25,6 +25,7 @@ export interface ClockWeatherCardConfig extends LovelaceCardConfig {
   hide_today_section?: boolean
   hide_forecast_section?: boolean
   show_humidity?: boolean
+  show_wind?: boolean
   hourly_forecast?: boolean
   hide_clock?: boolean
   hide_date?: boolean
@@ -51,6 +52,7 @@ export interface MergedClockWeatherCardConfig extends LovelaceCardConfig {
   hide_today_section: boolean
   hide_forecast_section: boolean
   show_humidity: boolean
+  show_wind: boolean
   hourly_forecast: boolean
   hide_clock: boolean
   hide_date: boolean
@@ -76,6 +78,9 @@ export interface Weather extends HassEntity {
     precipitation_unit: string
     forecast?: WeatherForecast[]
     supported_features: WeatherEntityFeature
+    wind_bearing?: number
+    wind_speed?: number
+    wind_speed_unit?: string
   }
 }
 

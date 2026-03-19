@@ -216,6 +216,7 @@ export class ClockWeatherCard extends LitElement {
     const aqiBackgroundColor = this.getAqiBackgroundColor(aqi)
     const aqiTextColor = this.getAqiTextColor(aqi)
     const humidity = roundIfNotNull(this.getCurrentHumidity())
+    const wind = this.getCurrentWind()
     const iconType = this.config.weather_icon_type
     const icon = this.toIcon(state, iconType, false, this.getIconAnimationKind())
     const weatherString = this.localize(`weather.${state}`)
@@ -234,6 +235,7 @@ export class ClockWeatherCard extends LitElement {
           <clock-weather-card-today-right-wrap-top>
             ${this.config.hide_clock ? weatherString : localizedTemp ? `${weatherString}, ${localizedTemp}` : weatherString}
             ${this.config.show_humidity && localizedHumidity ? html`<br>${localizedHumidity}` : ''}
+            ${this.config.show_wind && wind !== null ? html`<br>${wind}` : ''}
             ${this.config.apparent_sensor && apparentTemp ? html`<br>${apparentString}: ${localizedApparent}` : ''}
             ${this.config.aqi_sensor && aqi !== null ? html`<br><aqi style="background-color: ${aqiBackgroundColor}; color: ${aqiTextColor};">${aqi} ${aqiString}</aqi>` : ''}
           </clock-weather-card-today-right-wrap-top>
@@ -443,6 +445,7 @@ export class ClockWeatherCard extends LitElement {
       time_format: config.time_format?.toString() as '12' | '24' | undefined,
       time_pattern: config.time_pattern ?? undefined,
       show_humidity: config.show_humidity ?? false,
+      show_wind: config.show_wind ?? false,
       hide_forecast_section: config.hide_forecast_section ?? false,
       hide_today_section: config.hide_today_section ?? false,
       hide_clock: config.hide_clock ?? false,
@@ -496,6 +499,52 @@ export class ClockWeatherCard extends LitElement {
 
     // Return weather humidity if the code could not extract humidity from the humidity_sensor
     return this.getWeather().attributes.humidity ?? null
+  }
+
+  private getCurrentWind (): string | null {
+    const attributes = this.getWeather().attributes
+    if (attributes.wind_bearing !== undefined && attributes.wind_speed !== undefined) { 
+      return `${attributes.wind_speed} ${attributes.wind_speed_unit} (${this.windBearingDes(attributes.wind_bearing)})`
+    }
+    return null
+  }
+
+  private windBearingDes(bearing: number): string {
+    if (bearing < 11.25) {
+      return this.localize('wind.N')
+    }else if (bearing < 11.25 * 3) {
+      return this.localize('wind.NNE')
+    }else if (bearing < 11.25 * 5) {
+      return this.localize('wind.NE')
+    }else if (bearing < 11.25 * 7) {
+      return this.localize('wind.ENE')
+    }else if (bearing < 11.25 * 9) {
+      return this.localize('wind.E')
+    }else if (bearing < 11.25 * 11) {
+      return this.localize('wind.ESE')
+    }else if (bearing < 11.25 * 13) {
+      return this.localize('wind.SE')
+    }else if (bearing < 11.25 * 15) {
+      return this.localize('wind.SSE')
+    }else if (bearing < 11.25 * 17) {
+      return this.localize('wind.S')
+    }else if (bearing < 11.25 * 19) {
+      return this.localize('wind.SSW')
+    }else if (bearing < 11.25 * 21) {
+      return this.localize('wind.SW')
+    }else if (bearing < 11.25 * 23) {
+      return this.localize('wind.WSW')
+    }else if (bearing < 11.25 * 25) {
+      return this.localize('wind.W')
+    }else if (bearing < 11.25 * 27) {
+      return this.localize('wind.WNW')
+    }else if (bearing < 11.25 * 29) {
+      return this.localize('wind.NW')
+    }else if (bearing < 11.25 * 31) {
+      return this.localize('wind.NNW')
+    }else {
+      return this.localize('wind.N')
+    }
   }
 
   private getApparentTemperature (): number | null {
