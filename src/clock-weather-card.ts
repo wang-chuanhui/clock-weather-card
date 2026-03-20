@@ -503,10 +503,17 @@ export class ClockWeatherCard extends LitElement {
 
   private getCurrentWind (): string | null {
     const attributes = this.getWeather().attributes
-    if (attributes.wind_bearing !== undefined && attributes.wind_speed !== undefined) { 
-      return `${attributes.wind_speed} ${attributes.wind_speed_unit} (${this.windBearingDes(attributes.wind_bearing)})`
+    if (attributes.wind_speed == undefined) {
+      return null
     }
-    return null
+    const arr: string[] = [attributes.wind_speed.toString()]
+    if (attributes.wind_speed_unit) {
+      arr.push(attributes.wind_speed_unit)
+    }
+    if (attributes.wind_bearing !== undefined && attributes.wind_speed !== undefined) { 
+      arr.push(`(${this.windBearingDes(attributes.wind_bearing)})`)
+    }
+    return arr.join(' ')
   }
 
   private windBearingDes(bearing: number): string {
