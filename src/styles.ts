@@ -7,6 +7,15 @@ export default css`
     height: 100%;
   }
 
+  .no-background {
+    background: none;
+    box-shadow: none;
+  }
+
+  .no-border {
+    border: none;
+  }
+
   clock-weather-card-today {
     display: flex;
   }

@@ -33,6 +33,8 @@ import { animatedIcons, staticIcons } from './images'
 import { version } from '../package.json'
 import { safeRender } from './helpers'
 import { DateTime } from 'luxon'
+import { classMap } from "lit/directives/class-map.js";
+
 
 console.info(
   `%c  CLOCK-WEATHER-CARD \n%c Version: ${version}`,
@@ -154,7 +156,10 @@ export class ClockWeatherCard extends LitElement {
     const showToday = !this.config.hide_today_section
     const showForecast = !this.config.hide_forecast_section
     return html`
-      <ha-card
+      <ha-card class=${classMap({
+        "no-background": this.config.no_background ?? false,
+        "no-border": this.config.no_border ?? false,
+      })}
         @action=${(e: ActionHandlerEvent) => { this.handleAction(e) }}
         .actionHandler=${actionHandler({
       hasHold: hasAction(this.config.hold_action as ActionConfig | undefined),
